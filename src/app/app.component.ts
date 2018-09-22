@@ -6,27 +6,33 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { SignupPage } from '../pages/signup/signup';
+import { Authentication } from '../services/authentication';
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp
+{
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
+  invitedPages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public auth: Authentication) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'Crear Cuenta', component: SignupPage }
+      { title: 'Home', component: HomePage }
+      // { title: 'List', component: ListPage }
     ];
-
+        // used for an example of ngFor and navigation
+        this.invitedPages =
+        [
+          { title: 'Crear Cuenta', component: SignupPage }
+        ];
   }
 
   initializeApp() {
@@ -37,7 +43,10 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
-
+  logout()
+  {
+    this.auth.logout();
+  }
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
