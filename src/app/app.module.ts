@@ -11,16 +11,17 @@ import { SignupPage } from '../pages/signup/signup';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { AngularFireModule } from 'angularfire2';
-
+/*import {Authentication} from '../services/authentication'*/
 /* maneja la base de datos y la autenticacion */
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { Authentication } from '../services/authentication';
 
-import {firebaseConfig} from '../environments/firebase-config'
-
+import {firebaseConfig} from '../environments/firebase-config';
+import { AngularFireModule } from '@angular/fire';
 
 @NgModule({
+  /*llamo a mis paginas*/
   declarations: [
     MyApp,
     HomePage,
@@ -32,6 +33,7 @@ import {firebaseConfig} from '../environments/firebase-config'
     IonicModule.forRoot(MyApp),
     /*llamo a la configuracion*/
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
     AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
@@ -42,8 +44,10 @@ import {firebaseConfig} from '../environments/firebase-config'
     SignupPage
   ],
   providers: [
+    /*llamo a mis servicios*/
     StatusBar,
     SplashScreen,
+    Authentication,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
